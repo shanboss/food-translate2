@@ -1,3 +1,5 @@
+"use client";
+
 const { createContext } = require("react");
 import { initializeApp } from "firebase/app";
 
