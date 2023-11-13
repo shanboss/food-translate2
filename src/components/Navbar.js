@@ -13,7 +13,9 @@ const Navbar = ({ onSignIn, onSignOut, userPhoto }) => {
   };
 
   const handleNavigateDashboard = () => {
-    router.push("/dashboard"); // Navigate the user to the dashboard page
+    if (auth?.currentUser) {
+      router.push("/dashboard"); // Navigate the user to the dashboard page
+    }
   };
 
   console.log("userPhoto:", userPhoto);
@@ -22,8 +24,8 @@ const Navbar = ({ onSignIn, onSignOut, userPhoto }) => {
     <nav className="bg-gray-800 p-4">
       <div className="container mx-auto flex justify-between items-center">
         <div
-          className="text-white font-bold text-xl"
           onClick={handleNavigateDashboard}
+          className="text-white font-bold text-xl cursor-auto"
         >
           Food Translate
         </div>
@@ -51,7 +53,6 @@ const Navbar = ({ onSignIn, onSignOut, userPhoto }) => {
           ) : (
             // If currentUser is null, user is not signed in
             <div>
-              {/* Add your "Sign In" logic here */}
               <button onClick={onSignIn}>Sign In</button>
             </div>
           )}
