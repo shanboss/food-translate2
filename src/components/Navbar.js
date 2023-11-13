@@ -1,12 +1,17 @@
-"use client";
-
+// Navbar.js
 import React, { useState } from "react";
+import { getAuth, signOut } from "firebase/auth";
 
-const Navbar = ({ onSignOut, userPhoto }) => {
+const Navbar = ({ userPhoto }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const auth = getAuth();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  const handleSignOut = async () => {
+    await signOut(auth);
   };
 
   console.log("userPhoto:", userPhoto);
@@ -20,18 +25,29 @@ const Navbar = ({ onSignOut, userPhoto }) => {
             isMenuOpen ? "flex" : "hidden"
           }`}
         >
-          <div>
-            <button onClick={onSignOut}>Sign Out</button>
-          </div>
-          <a>
-            {userPhoto && (
-              <img
-                className="rounded-full w-10 h-10"
-                src={userPhoto}
-                alt="user"
-              />
-            )}
-          </a>
+          {auth.currentUser ? (
+            // If currentUser exists, user is signed in
+            <>
+              <div>
+                <button onClick={handleSignOut}>Sign Out</button>
+              </div>
+              <a>
+                {userPhoto && (
+                  <img
+                    className="rounded-full w-10 h-10"
+                    src={userPhoto}
+                    alt="user"
+                  />
+                )}
+              </a>
+            </>
+          ) : (
+            // If currentUser is null, user is not signed in
+            <div>
+              {/* Add your "Sign In" logic here */}
+              <button>Sign In</button>
+            </div>
+          )}
         </div>
         <button className="md:hidden text-white" onClick={toggleMenu}>
           <svg

@@ -7,7 +7,7 @@ import {
   doc,
   getFirestore,
 } from "firebase/firestore";
-import { getAuth, signOut } from "firebase/auth";
+import { getAuth } from "firebase/auth";
 const db = getFirestore();
 
 const ItemForm = ({ onClose }) => {
@@ -45,10 +45,15 @@ const ItemForm = ({ onClose }) => {
             placeholder="Food Item"
             value={foodItemName}
             onChange={handleFoodItemNameChange}
-            className="text-white bg-slate-950 rounded-md border border-gray-50 p-2" // Set text color to black
+            className="text-white bg-slate-950 rounded-md border border-gray-50 p-2"
           />
         </label>
-        <button type="submit">Add Food Item</button>
+        <button
+          className="bg-blue-500 p-2 px-9 rounded-lg hover:bg-green-500"
+          type="submit"
+        >
+          Add
+        </button>
       </form>
     </div>
   );
