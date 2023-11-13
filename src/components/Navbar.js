@@ -1,17 +1,19 @@
 // Navbar.js
 import React, { useState } from "react";
 import { getAuth, signOut } from "firebase/auth";
+import { useRouter } from "next/navigation";
 
-const Navbar = ({ userPhoto }) => {
+const Navbar = ({ onSignIn, onSignOut, userPhoto }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const auth = getAuth();
+  const router = useRouter();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const handleSignOut = async () => {
-    await signOut(auth);
+  const handleNavigateDashboard = () => {
+    router.push("/dashboard"); // Navigate the user to the dashboard page
   };
 
   console.log("userPhoto:", userPhoto);
@@ -19,7 +21,12 @@ const Navbar = ({ userPhoto }) => {
   return (
     <nav className="bg-gray-800 p-4">
       <div className="container mx-auto flex justify-between items-center">
-        <div className="text-white font-bold text-xl">Food Translate</div>
+        <div
+          className="text-white font-bold text-xl"
+          onClick={handleNavigateDashboard}
+        >
+          Food Translate
+        </div>
         <div
           className={`hidden md:flex space-x-4 items-center ${
             isMenuOpen ? "flex" : "hidden"
@@ -29,7 +36,7 @@ const Navbar = ({ userPhoto }) => {
             // If currentUser exists, user is signed in
             <>
               <div>
-                <button onClick={handleSignOut}>Sign Out</button>
+                <button onClick={onSignOut}>Sign Out</button>
               </div>
               <a>
                 {userPhoto && (
@@ -45,7 +52,7 @@ const Navbar = ({ userPhoto }) => {
             // If currentUser is null, user is not signed in
             <div>
               {/* Add your "Sign In" logic here */}
-              <button>Sign In</button>
+              <button onClick={onSignIn}>Sign In</button>
             </div>
           )}
         </div>

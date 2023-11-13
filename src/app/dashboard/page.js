@@ -5,7 +5,7 @@ import { getAuth, signOut } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { getFirestore, doc, getDoc } from "firebase/firestore";
 import Navbar from "@/components/Navbar";
-import ItemForm from "@/components/ItemForm";
+import AddItemButton from "@/components/AddItemButton";
 
 export default function Dashboard() {
   const router = useRouter();
@@ -43,28 +43,15 @@ export default function Dashboard() {
       router.push("/");
     });
   };
-
-  const handleAddFoodItem = () => {
-    setShowItemForm(true);
-  };
-
   return (
     <div>
-      <Navbar onSignOut={handleSignOut} userPhoto={photoURL} />
+      <Navbar onSignIn={null} onSignOut={handleSignOut} userPhoto={photoURL} />
       <div className="flex flex-col items-center">
         {" "}
-        {/* Wrap Welcome and Button in a container */}
-        <div className="p-16 text-4xl mb-4">Welcome, {displayName}</div>{" "}
-        {/* Apply margin-bottom */}
-        <div className="p-16 text-xl">
-          <button
-            className="bg-blue-500 text-white py-2 px-4 rounded"
-            onClick={handleAddFoodItem}
-          >
-            Add Food Item
-          </button>
-        </div>
-        {showItemForm && <ItemForm onClose={() => setShowItemForm(false)} />}
+        <div className="p-6 text-4xl mb-4">Welcome, {displayName}</div>{" "}
+        <AddItemButton ButtonLabel="Add your favorite food item" />
+        <AddItemButton ButtonLabel="Add your favorite cuisine " />
+        <AddItemButton ButtonLabel="Add some dietary restrictions" />
       </div>
     </div>
   );

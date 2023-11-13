@@ -2,6 +2,7 @@
 
 import Navbar from "@/components/Navbar";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+
 import { useRouter } from "next/navigation";
 
 export default function Home() {
@@ -27,7 +28,7 @@ export default function Home() {
       <div className="min-h-screen flex items-center justify-center bg-slate-950">
         <div className="max-w-md p-8 bg-slate-900 shadow-md rounded-md">
           <div className="text-2xl text-white font-extrabold text-center mb-6">
-            Sign Up or Log In
+            Create an Account or Log In
           </div>
 
           <button
