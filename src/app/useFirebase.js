@@ -2,6 +2,8 @@
 
 const { createContext } = require("react");
 import { initializeApp } from "firebase/app";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getFirestore, doc, setDoc } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyA7V6wwJZ_7TF8lNyGO3nwM87SagmWl_Ps",
@@ -14,6 +16,24 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
+const auth = getAuth();
+const db = getFirestore();
+
+onAuthStateChanged(auth, () => {
+  console.log("It is running");
+  if (auth?.currentUser) {
+    const { uid, displayName, photoURL } = auth.currentUser;
+    const userRef = doc(db, "users", uid);
+    setDoc(
+      userRef,
+      {
+        displayName,
+        photoURL,
+      },
+      { merge: true }
+    );
+  }
+});
 
 const FirebaseContext = createContext();
 
